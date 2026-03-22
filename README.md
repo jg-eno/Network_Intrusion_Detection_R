@@ -1,77 +1,47 @@
 # Network Intrusion Detection (R)
 
-KDD-style cleanup and **logistic regression** to distinguish **normal** vs **malicious** traffic (`anomaly` in the data is treated as malicious). Default inputs are `data/Train_data.csv` (labeled) and `data/Test_data.csv` (features only).
+Pipeline: encode categoricals, drop near-zero-variance columns, scale features, pick 25 columns by univariate linear-model *p*-values, **80/20 split**, **random forest** (100 trees), then print a **caret** confusion matrix on the hold-out set.
 
-## Prerequisites
+## Requirements
 
-- [R](https://www.r-project.org/) (uses base R only: `stats`, `utils`)
-- `bash` and `curl` if you download the dataset from the command line
+- [R](https://www.r-project.org/) (3.5+ recommended)
+- **`Train_data.csv`** in the **project root** (same folder as `network_intrusion_pipeline.R`; see [Run](#run))
 
-## Get the data
+## Install R packages
 
-### Option 1: Files already in the repo
+In R or the shell:
 
-If `data/Train_data.csv` and `data/Test_data.csv` are present, you can skip downloading.
+```r
+install.packages(c("caret", "randomForest"), repos = "https://cloud.r-project.org")
+```
 
-### Option 2: Download with cURL (Kaggle API)
+```bash
+Rscript -e 'install.packages(c("caret", "randomForest"), repos="https://cloud.r-project.org")'
+```
 
-The API normally requires your Kaggle credentials (from [Kaggle → Settings → API](https://www.kaggle.com/settings): create a token and use the username and key).
+`caret` will pull in its dependencies (e.g. `ggplot2`, `lattice`) automatically.
+
+## Data
+
+Keep **`Train_data.csv`** in the **repository root**. The last column is the class label; all other columns are features.
+
+Optional download (needs [Kaggle API credentials](https://www.kaggle.com/settings)):
 
 ```bash
 export KAGGLE_USERNAME="your_kaggle_username"
 export KAGGLE_KEY="your_kaggle_key"
-
 curl -L -o ~/Downloads/network-intrusion-detection.zip \
   -u "${KAGGLE_USERNAME}:${KAGGLE_KEY}" \
   "https://www.kaggle.com/api/v1/datasets/download/sampadab17/network-intrusion-detection"
 ```
 
-Then unzip and copy the CSVs into this project’s `data/` folder (names should match **`Train_data.csv`** and **`Test_data.csv`**, or set paths via environment variables below).
+Unzip and copy **`Train_data.csv`** into the project root, or run `bash download_dataset.sh` and unzip the archive the same way.
 
-### Option 3: Helper script
+## Run
 
-From the project root:
-
-```bash
-export KAGGLE_USERNAME="your_kaggle_username"
-export KAGGLE_KEY="your_kaggle_key"
-
-bash download_dataset.sh
-```
-
-This saves `~/Downloads/network-intrusion-detection.zip` by default. You can pass another path: `bash download_dataset.sh /path/to/archive.zip`.
-
-Unzip the archive and place **`Train_data.csv`** and **`Test_data.csv`** under `data/`.
-
-## Run the pipeline
-
-From the project root:
+From the project root (so `Train_data.csv` and `network_intrusion_pipeline.R` are in the current directory):
 
 ```bash
 cd /path/to/Network_Intrusion_Detection_R
 Rscript network_intrusion_pipeline.R
 ```
-
-### Optional environment variables
-
-| Variable | Purpose |
-|----------|---------|
-| `NID_TRAIN_CSV` | Path to the training CSV (default: `./data/Train_data.csv`) |
-| `NID_TEST_CSV` | Path to the test CSV (default: `./data/Test_data.csv`) |
-| `NID_ZIP_PATH` | Zip path used only if the training CSV is **missing** (default: `~/Downloads/network-intrusion-detection.zip`) |
-
-Example:
-
-```bash
-NID_TRAIN_CSV="$HOME/mydata/Train_data.csv" \
-NID_TEST_CSV="$HOME/mydata/Test_data.csv" \
-Rscript network_intrusion_pipeline.R
-```
-
-## What the script does
-
-- **KDD-style steps**: selection, cleaning (duplicates, empty/constant columns, simple imputation), dummy encoding, **logistic regression** (`glm` binomial), evaluation.
-- **Train file**: `class` column (`normal` / `anomaly`); reports an **80/20 validation** accuracy on the training set and fits on all training rows for scoring.
-- **Test file**: if there is no `class` column, the script prints **prediction counts** only (no test accuracy without labels).
-
-Extracted zip contents (when using the zip fallback) are written under `data/raw/`.
