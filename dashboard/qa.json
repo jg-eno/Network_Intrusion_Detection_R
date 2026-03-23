@@ -1,0 +1,77 @@
+[
+    {
+        "id": 1,
+        "question": "Can machine learning models accurately classify network traffic as normal or anomalous based on TCP/IP connection features?",
+        "answer": "Yes, advanced machine learning models (like Random Forests) can accurately classify network traffic by analyzing patterns in TCP/IP connection features."
+    },
+    {
+        "id": 2,
+        "question": "Which supervised classification algorithm provides the highest detection accuracy for intrusion detection?",
+        "answer": "[Placeholder Answer] Typically, ensemble methods like Random Forest and XGBoost provide the highest accuracy by aggregating multiple decision trees."
+    },
+    {
+        "id": 3,
+        "question": "Which model achieves the lowest false negative rate in detecting anomalous traffic?",
+        "answer": "[Placeholder Answer] Deep learning models and properly tuned Random Forests generally achieve very low false negative rates."
+    },
+    {
+        "id": 4,
+        "question": "How does class imbalance affect the performance of intrusion detection models?",
+        "answer": "[Placeholder Answer] Class imbalance often biases models towards the majority class (e.g., normal traffic), reducing detection rates for rare intrusions without proper sampling."
+    },
+    {
+        "id": 5,
+        "question": "Does feature scaling significantly improve the performance of distance-based classifiers such as KNN and SVM?",
+        "answer": "[Placeholder Answer] Yes, scaling prevents features with larger numerical ranges from disproportionately dominating the distance metrics in KNN and SVM."
+    },
+    {
+        "id": 6,
+        "question": "Which network features contribute most significantly to identifying intrusions?",
+        "answer": "[Placeholder Answer] Features like 'src_bytes', 'dst_bytes', 'count', and error rates ('serror_rate') are frequently the most predictive for identifying anomalies."
+    },
+    {
+        "id": 7,
+        "question": "Can dimensionality reduction techniques such as PCA improve model efficiency without compromising detection performance?",
+        "answer": "[Placeholder Answer] Yes, PCA can reduce training time and eliminate noise, often maintaining or slightly improving detection performance by mitigating the curse of dimensionality."
+    },
+    {
+        "id": 8,
+        "question": "How does model performance vary when evaluated using precision, recall, F1-score, and ROC-AUC metrics?",
+        "answer": "[Placeholder Answer] Accuracy may look artificially high in imbalanced data, whereas Precision/Recall, F1-score, and ROC-AUC offer a clearer picture of positive-class detection capability."
+    },
+    {
+        "id": 9,
+        "question": "What is the trade-off between precision and recall in intrusion detection scenarios?",
+        "answer": "[Placeholder Answer] Higher recall minimizes missed intrusions (false negatives) but usually decreases precision, leading to more false alarms (false positives)."
+    },
+    {
+        "id": 10,
+        "question": "Which model demonstrates the best generalization capability on unseen test data?",
+        "answer": "[Placeholder Answer] Ensemble models heavily regularized to prevent overfitting usually exhibit the best generalization capability on completely unseen networks."
+    },
+    {
+        "id": 11,
+        "question": "How does hyperparameter tuning influence the performance of tree-based and kernel-based models?",
+        "answer": "[Placeholder Answer] Proper tuning of max depth, tree count (for trees), or C and gamma (for SVM) drastically prevents overfitting and highly optimizes decision boundaries."
+    },
+    {
+        "id": 12,
+        "question": "Can ensemble learning methods outperform individual classifiers in detecting network intrusions?",
+        "answer": "[Placeholder Answer] Yes, ensemble methods aggregate the decisions of weaker individual classifiers, significantly boosting robustness and reducing total error."
+    },
+    {
+        "id": 13,
+        "question": "What is the computational cost (training time and prediction time) of different classification models?",
+        "answer": "[Placeholder Answer] Linear Models/Naive Bayes are fast to train & predict. SVMs are computationally heavy to train. Random Forests sit in the middle for training but are very fast at prediction."
+    },
+    {
+        "id": 14,
+        "question": "How effectively can the proposed system minimize false alarms while maintaining high detection accuracy?",
+        "answer": "[Placeholder Answer] By utilizing hyperparameter optimization and choosing thresholds that balance the ROC curve, false alarms are significantly minimized."
+    },
+    {
+        "id": 15,
+        "question": "Is the developed intrusion detection model scalable for large-scale, real-time network traffic environments?",
+        "answer": "[Placeholder Answer] Yes, once trained, models like Random Forest or lighter Gradient Boosting modules hold microsecond prediction times suitable for real-time environments."
+    }
+]
