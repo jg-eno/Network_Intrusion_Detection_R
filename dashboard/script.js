@@ -1,25 +1,32 @@
+let appData = null;
+let charts = {}; // Store chart instances for safe destruction
+
 document.addEventListener('DOMContentLoaded', () => {
     fetchData();
 });
 
 async function fetchData() {
     try {
-        const [dataResponse, qaResponse] = await Promise.all([
-            fetch('data.json'),
-            fetch('qa.json').catch(() => null)
-        ]);
+        const dataResponse = await fetch('data.json');
         
         if (!dataResponse.ok) {
             throw new Error(`HTTP error! status: ${dataResponse.status}`);
         }
-        const data = await dataResponse.json();
-        renderDashboard(data);
         
-        if (qaResponse && qaResponse.ok) {
-            const qaData = await qaResponse.json();
-            renderQA(qaData);
+        appData = await dataResponse.json();
+        
+        // Render Global dataset stats
+        if (appData.class_distribution) renderDistributionChart(appData.class_distribution);
+        if (appData.top_features) renderEDAChart(appData.top_features);
+        
+        // Process Models
+        if (appData.models && appData.models.length > 0) {
+            renderTabs(appData.models);
+            renderModelData(0); // Load first model by default
         } else {
-            document.getElementById('qa-container').innerHTML = '<p class="text-muted">No Q&A data found.</p>';
+            // Fallback for old data.json structure
+            document.getElementById('model-tabs').innerHTML = '<p class="text-muted">No models array found. Using legacy format.</p>';
+            renderLegacyDashboard(appData);
         }
 
     } catch (error) {
@@ -29,39 +36,59 @@ async function fetchData() {
     }
 }
 
-function renderDashboard(data) {
-    if (data.core_metrics) {
-        renderMetrics(data.core_metrics);
-    } else {
-        renderMetrics(data.metrics);
+function renderTabs(models) {
+    const container = document.getElementById('model-tabs');
+    container.innerHTML = '';
+    
+    models.forEach((model, index) => {
+        const btn = document.createElement('button');
+        btn.className = `tab-btn ${index === 0 ? 'active' : ''}`;
+        btn.textContent = model.name || `Model ${index + 1}`;
+        btn.onclick = () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderModelData(index);
+        };
+        container.appendChild(btn);
+    });
+}
+
+function renderModelData(index) {
+    const modelData = appData.models[index];
+    
+    // Trigger animation
+    const section = document.querySelector('.model-metrics-section');
+    section.classList.remove('fadeIn');
+    void section.offsetWidth; // force reflow
+    section.classList.add('fadeIn');
+
+    // Render Metrics
+    if (modelData.core_metrics) {
+        renderMetrics(modelData.core_metrics);
+    } else if (modelData.metrics) { 
+        renderMetrics(modelData.metrics);
     }
-    renderDistributionChart(data.class_distribution);
-    renderEDAChart(data.top_features);
+    
+    renderConfusionMatrix(modelData.cm_table);
+    renderClassStats(modelData.class_metrics);
+    
+    if (modelData.roc_data && Array.isArray(modelData.roc_data) && modelData.roc_data.length > 0) {
+        renderROCChart(modelData.roc_data);
+    } else {
+        // Clear canvas if no ROC data
+        if (charts['rocChart']) charts['rocChart'].destroy();
+        const canvas = document.getElementById('rocChart');
+        if (canvas) canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    }
+}
+
+function renderLegacyDashboard(data) {
+    if (data.core_metrics) renderMetrics(data.core_metrics);
+    else if (data.metrics) renderMetrics(data.metrics);
+    
     renderConfusionMatrix(data.cm_table);
     renderClassStats(data.class_metrics);
     if (data.roc_data) renderROCChart(data.roc_data);
-}
-
-function renderQA(qaData) {
-    const container = document.getElementById('qa-container');
-    container.innerHTML = '';
-    container.className = 'qa-grid';
-
-    // Renders the data iteratively down into our new masonry grid of pure CSS cards.
-    qaData.forEach((item, index) => {
-        const card = document.createElement('div');
-        card.className = 'qa-card';
-        
-        card.innerHTML = `
-            <div class="qa-card-header">
-                <span class="qa-number-badge">Insight ${index + 1}</span>
-            </div>
-            <h3 class="qa-card-question">${item.question}</h3>
-            <div class="qa-card-answer">${item.answer}</div>
-        `;
-        
-        container.appendChild(card);
-    });
 }
 
 function renderMetrics(metrics) {
@@ -86,10 +113,9 @@ function renderMetrics(metrics) {
 
     metricsToDisplay.forEach(item => {
         let val = metrics[item.key];
-        // handle old array format fallback logic
-        if (Array.isArray(val)) val = val[0];
+        if (Array.isArray(val)) val = val[0]; // R can return single-element arrays
 
-        if (val !== null && val !== undefined) {
+        if (val !== null && val !== undefined && !isNaN(val)) {
             const card = document.createElement('div');
             card.className = 'metric-card';
             
@@ -97,7 +123,7 @@ function renderMetrics(metrics) {
             if (val < 0.9) badgeClass = 'badge-warning';
 
             card.innerHTML = `
-                <div class="metric-label">${item.label} <span class="metric-icon">${icons[item.key]}</span></div>
+                <div class="metric-label">${item.label} <span class="metric-icon">${icons[item.key] || ''}</span></div>
                 <div class="metric-value">${item.format(val)}</div>
                 <div><span class="badge ${badgeClass}">${item.getBadge(val)}</span></div>
             `;
@@ -107,22 +133,19 @@ function renderMetrics(metrics) {
 }
 
 function renderDistributionChart(distData) {
-    const labels = distData.map(d => `Class ${d.y}`);
+    if (charts['distributionChart']) charts['distributionChart'].destroy();
+
+    const labels = distData.map(d => `Class ${d.y || d.Var1}`);
     const data = distData.map(d => d.Freq);
 
     const ctx = document.getElementById('distributionChart').getContext('2d');
-    new Chart(ctx, {
+    charts['distributionChart'] = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: labels,
             datasets: [{
                 data: data,
-                backgroundColor: [
-                    '#2563eb', // blue-600
-                    '#6366f1', // indigo-500
-                    '#8b5cf6', // violet-500
-                    '#d946ef'  // fuchsia-500
-                ],
+                backgroundColor: ['#2563eb', '#6366f1', '#8b5cf6', '#d946ef'],
                 borderWidth: 2,
                 borderColor: '#ffffff',
                 hoverOffset: 4
@@ -147,6 +170,8 @@ function renderDistributionChart(distData) {
 }
 
 function renderEDAChart(featureData) {
+    if (charts['edaChart']) charts['edaChart'].destroy();
+
     let chartData = featureData.map(f => {
         let p = f.Score;
         if (p < 1e-300) p = 1e-300;
@@ -160,12 +185,11 @@ function renderEDAChart(featureData) {
 
     const ctx = document.getElementById('edaChart').getContext('2d');
     
-    // Create elegant visual gradient for shadcn chart
     const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-    gradient.addColorStop(0, '#3b82f6'); // bright blue
-    gradient.addColorStop(1, '#1e3a8a'); // deep blue
+    gradient.addColorStop(0, '#3b82f6');
+    gradient.addColorStop(1, '#1e3a8a');
 
-    new Chart(ctx, {
+    charts['edaChart'] = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
@@ -180,10 +204,7 @@ function renderEDAChart(featureData) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            animation: {
-                duration: 1000,
-                easing: 'easeOutQuart'
-            },
+            animation: { duration: 1000, easing: 'easeOutQuart' },
             scales: {
                 y: {
                     beginAtZero: true,
@@ -213,6 +234,11 @@ function renderEDAChart(featureData) {
 
 function renderConfusionMatrix(cmData) {
     const container = document.getElementById('cm-container');
+    if (!cmData || cmData.length === 0) {
+        container.innerHTML = '<p class="text-muted">No confusion matrix data available.</p>';
+        return;
+    }
+
     const classes = [...new Set(cmData.map(d => d.Reference))].sort((a, b) => Number(a) - Number(b));
     
     let tableHTML = '<table><thead><tr><th>Pred \\ Ref</th>';
@@ -237,27 +263,58 @@ function renderConfusionMatrix(cmData) {
 
 function renderClassStats(classStats) {
     const container = document.getElementById('stats-container');
+    if (!classStats || classStats.length === 0 || !classStats[0]) {
+        container.innerHTML = '<table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody><tr><td colspan="2">No statistics</td></tr></tbody></table>';
+        return;
+    }
+
     let tableHTML = '<table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody>';
     
     classStats.forEach(stat => {
-        const key = stat["_row"];
-        const value = stat["cm$byClass"];
-        if (key && value !== undefined && value !== null && !isNaN(value)) {
-            const numVal = Number(value);
-            const displayValue = numVal.toFixed(4);
-            
-            // Add visual inline progress bar for normalized stats
+        const key = stat["_row"] || stat["Class"];
+        // In some cases properties sit on root (binary vs multiclass caret outputs differ)
+        // Multi-class cm$byClass returns a matrix mapped to array of objects with `_row`
+        // We'll iterate the object if the array elements don't strictly have `cm$byClass` properties.
+        
+        let valToDisplayStr = '';
+        let numValForProg = NaN;
+
+        if (stat["cm$byClass"] !== undefined) {
+             // old extraction format
+             numValForProg = Number(stat["cm$byClass"]);
+             valToDisplayStr = numValForProg.toFixed(4);
+        } else {
+             // For binary cm$byClass
+             Object.keys(stat).forEach(k => {
+                 if(k !== "_row" && k !== "Class" && !isNaN(stat[k])) {
+                     numValForProg = Number(stat[k]);
+                     valToDisplayStr = numValForProg.toFixed(4);
+                 }
+             });
+        }
+
+        if (key && !isNaN(numValForProg)) {
             let visual = '';
-            if (numVal >= 0 && numVal <= 1) {
-                const percent = (numVal * 100).toFixed(1);
+            if (numValForProg >= 0 && numValForProg <= 1) {
+                const percent = (numValForProg * 100).toFixed(1);
                 visual = `<div class="progress-bg"><div class="progress-fill" style="width: ${percent}%;"></div></div>`;
             }
-            
-            tableHTML += `<tr><td class="stat-key">${key}</td><td class="stat-val"><div>${displayValue}</div>${visual}</td></tr>`;
+            tableHTML += `<tr><td class="stat-key">${key}</td><td class="stat-val"><div>${valToDisplayStr}</div>${visual}</td></tr>`;
         }
     });
     
-    if (tableHTML === '<table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody>') {
+    if (tableHTML.endsWith('<tbody>')) {
+        // Fallback for flat dictionary (binary case without array map)
+        Object.keys(classStats).forEach(k => {
+            if (typeof classStats[k] === 'number' && !Array.isArray(classStats[k])) {
+                 const numVal = classStats[k];
+                 const visual = (numVal >= 0 && numVal <= 1) ? `<div class="progress-bg"><div class="progress-fill" style="width: ${(numVal*100).toFixed(1)}%;"></div></div>` : '';
+                 tableHTML += `<tr><td class="stat-key">${k}</td><td class="stat-val"><div>${numVal.toFixed(4)}</div>${visual}</td></tr>`;
+            }
+        });
+    }
+
+    if (tableHTML.endsWith('<tbody>')) {
         tableHTML += '<tr><td colspan="2">No class statistics available</td></tr>';
     }
     
@@ -266,19 +323,20 @@ function renderClassStats(classStats) {
 }
 
 function renderROCChart(rocData) {
+    if (charts['rocChart']) charts['rocChart'].destroy();
+
     const ctx = document.getElementById('rocChart');
     if (!ctx) return;
     
     const context2d = ctx.getContext('2d');
     const gradient = context2d.createLinearGradient(0, 0, 0, 300);
-    // Soft transparent emerald gradient fill for the AUC
     gradient.addColorStop(0, 'rgba(16, 185, 129, 0.25)'); 
     gradient.addColorStop(1, 'rgba(16, 185, 129, 0.05)');
 
     const xData = rocData.map(d => d.FPR);
     const yData = rocData.map(d => d.TPR);
 
-    new Chart(context2d, {
+    charts['rocChart'] = new Chart(context2d, {
         type: 'line',
         data: {
             labels: xData.map(v => v.toFixed(2)),
@@ -305,14 +363,8 @@ function renderROCChart(rocData) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            animation: {
-                duration: 1000,
-                easing: 'easeOutQuart'
-            },
-            interaction: {
-                mode: 'nearest',
-                intersect: false,
-            },
+            animation: { duration: 800, easing: 'easeOutQuart' },
+            interaction: { mode: 'nearest', intersect: false },
             scales: {
                 y: {
                     title: { display: true, text: 'True Positive Rate (Sensitivity)', color: '#71717a', font: { family: 'Inter', size: 11 } },

@@ -1,0 +1,1157 @@
+{
+  "class_distribution": [
+    {
+      "y": "1",
+      "Freq": 11743
+    },
+    {
+      "y": "2",
+      "Freq": 13449
+    }
+  ],
+  "top_features": [
+    {
+      "Feature": "protocol_type",
+      "Score": 0
+    },
+    {
+      "Feature": "service",
+      "Score": 0
+    },
+    {
+      "Feature": "flag",
+      "Score": 0
+    },
+    {
+      "Feature": "logged_in",
+      "Score": 0
+    },
+    {
+      "Feature": "count",
+      "Score": 0
+    },
+    {
+      "Feature": "serror_rate",
+      "Score": 0
+    },
+    {
+      "Feature": "srv_serror_rate",
+      "Score": 0
+    },
+    {
+      "Feature": "rerror_rate",
+      "Score": 0
+    },
+    {
+      "Feature": "srv_rerror_rate",
+      "Score": 0
+    },
+    {
+      "Feature": "same_srv_rate",
+      "Score": 0
+    },
+    {
+      "Feature": "dst_host_srv_count",
+      "Score": 0
+    },
+    {
+      "Feature": "dst_host_same_srv_rate",
+      "Score": 0
+    },
+    {
+      "Feature": "dst_host_serror_rate",
+      "Score": 0
+    },
+    {
+      "Feature": "dst_host_srv_serror_rate",
+      "Score": 0
+    },
+    {
+      "Feature": "dst_host_rerror_rate",
+      "Score": 0
+    },
+    {
+      "Feature": "dst_host_srv_rerror_rate",
+      "Score": 0
+    },
+    {
+      "Feature": "dst_host_diff_srv_rate",
+      "Score": 7.9051e-322
+    },
+    {
+      "Feature": "diff_srv_rate",
+      "Score": 4.0936e-211
+    },
+    {
+      "Feature": "srv_diff_host_rate",
+      "Score": 2.5795e-82
+    },
+    {
+      "Feature": "dst_host_same_src_port_rate",
+      "Score": 1.7473e-49
+    },
+    {
+      "Feature": "dst_host_srv_diff_host_rate",
+      "Score": 1.5658e-23
+    },
+    {
+      "Feature": "dst_bytes",
+      "Score": 0.0822
+    },
+    {
+      "Feature": "src_bytes",
+      "Score": 0.3621
+    },
+    {
+      "Feature": "srv_count",
+      "Score": 0.7068
+    }
+  ],
+  "models": [
+    {
+      "name": ["Random Forest"],
+      "cm_table": [
+        {
+          "Prediction": "1",
+          "Reference": "1",
+          "Freq": 2322
+        },
+        {
+          "Prediction": "2",
+          "Reference": "1",
+          "Freq": 14
+        },
+        {
+          "Prediction": "1",
+          "Reference": "2",
+          "Freq": 4
+        },
+        {
+          "Prediction": "2",
+          "Reference": "2",
+          "Freq": 2699
+        }
+      ],
+      "metrics": {
+        "Accuracy": [0.9964],
+        "Kappa": [0.9928],
+        "AccuracyLower": [0.9944],
+        "AccuracyUpper": [0.9979],
+        "AccuracyNull": [0.5364],
+        "AccuracyPValue": [0],
+        "McnemarPValue": [0.0339]
+      },
+      "class_metrics": [
+        {
+          "cm$byClass": 0.994,
+          "_row": "Sensitivity"
+        },
+        {
+          "cm$byClass": 0.9985,
+          "_row": "Specificity"
+        },
+        {
+          "cm$byClass": 0.9983,
+          "_row": "Pos Pred Value"
+        },
+        {
+          "cm$byClass": 0.9948,
+          "_row": "Neg Pred Value"
+        },
+        {
+          "cm$byClass": 0.9983,
+          "_row": "Precision"
+        },
+        {
+          "cm$byClass": 0.994,
+          "_row": "Recall"
+        },
+        {
+          "cm$byClass": 0.9961,
+          "_row": "F1"
+        },
+        {
+          "cm$byClass": 0.4636,
+          "_row": "Prevalence"
+        },
+        {
+          "cm$byClass": 0.4608,
+          "_row": "Detection Rate"
+        },
+        {
+          "cm$byClass": 0.4616,
+          "_row": "Detection Prevalence"
+        },
+        {
+          "cm$byClass": 0.9963,
+          "_row": "Balanced Accuracy"
+        }
+      ],
+      "core_metrics": {
+        "Accuracy": [0.9964],
+        "Precision": [0.9983],
+        "Recall": [0.994],
+        "F1_Score": [0.9961],
+        "AUC": [0.9995]
+      },
+      "roc_data": [
+        {
+          "FPR": 0.0004,
+          "TPR": 0.8213
+        },
+        {
+          "FPR": 0.0004,
+          "TPR": 0.9364
+        },
+        {
+          "FPR": 0.0009,
+          "TPR": 0.96
+        },
+        {
+          "FPR": 0.0013,
+          "TPR": 0.9767
+        },
+        {
+          "FPR": 0.0013,
+          "TPR": 0.983
+        },
+        {
+          "FPR": 0.0017,
+          "TPR": 0.9878
+        },
+        {
+          "FPR": 0.0017,
+          "TPR": 0.9893
+        },
+        {
+          "FPR": 0.0017,
+          "TPR": 0.993
+        },
+        {
+          "FPR": 0.0021,
+          "TPR": 0.9952
+        },
+        {
+          "FPR": 0.0039,
+          "TPR": 0.9967
+        },
+        {
+          "FPR": 0.0043,
+          "TPR": 0.9967
+        },
+        {
+          "FPR": 0.0047,
+          "TPR": 0.997
+        },
+        {
+          "FPR": 0.0051,
+          "TPR": 0.9974
+        },
+        {
+          "FPR": 0.0056,
+          "TPR": 0.9985
+        },
+        {
+          "FPR": 0.0056,
+          "TPR": 0.9985
+        },
+        {
+          "FPR": 0.0064,
+          "TPR": 0.9985
+        },
+        {
+          "FPR": 0.0068,
+          "TPR": 0.9985
+        },
+        {
+          "FPR": 0.0073,
+          "TPR": 0.9989
+        },
+        {
+          "FPR": 0.0098,
+          "TPR": 0.9989
+        },
+        {
+          "FPR": 0.0107,
+          "TPR": 0.9989
+        },
+        {
+          "FPR": 0.0116,
+          "TPR": 0.9989
+        },
+        {
+          "FPR": 0.015,
+          "TPR": 0.9993
+        },
+        {
+          "FPR": 0.0158,
+          "TPR": 0.9993
+        },
+        {
+          "FPR": 0.0176,
+          "TPR": 0.9993
+        },
+        {
+          "FPR": 0.0193,
+          "TPR": 0.9993
+        },
+        {
+          "FPR": 0.024,
+          "TPR": 0.9993
+        },
+        {
+          "FPR": 0.0265,
+          "TPR": 1
+        },
+        {
+          "FPR": 0.0368,
+          "TPR": 1
+        },
+        {
+          "FPR": 0.0518,
+          "TPR": 1
+        },
+        {
+          "FPR": 1,
+          "TPR": 1
+        }
+      ]
+    },
+    {
+      "name": ["Logistic Regression"],
+      "cm_table": [
+        {
+          "Prediction": "1",
+          "Reference": "1",
+          "Freq": 2165
+        },
+        {
+          "Prediction": "2",
+          "Reference": "1",
+          "Freq": 171
+        },
+        {
+          "Prediction": "1",
+          "Reference": "2",
+          "Freq": 75
+        },
+        {
+          "Prediction": "2",
+          "Reference": "2",
+          "Freq": 2628
+        }
+      ],
+      "metrics": {
+        "Accuracy": [0.9512],
+        "Kappa": [0.9016],
+        "AccuracyLower": [0.9449],
+        "AccuracyUpper": [0.957],
+        "AccuracyNull": [0.5364],
+        "AccuracyPValue": [0],
+        "McnemarPValue": [1.387e-09]
+      },
+      "class_metrics": [
+        {
+          "cm$byClass": 0.9268,
+          "_row": "Sensitivity"
+        },
+        {
+          "cm$byClass": 0.9723,
+          "_row": "Specificity"
+        },
+        {
+          "cm$byClass": 0.9665,
+          "_row": "Pos Pred Value"
+        },
+        {
+          "cm$byClass": 0.9389,
+          "_row": "Neg Pred Value"
+        },
+        {
+          "cm$byClass": 0.9665,
+          "_row": "Precision"
+        },
+        {
+          "cm$byClass": 0.9268,
+          "_row": "Recall"
+        },
+        {
+          "cm$byClass": 0.9462,
+          "_row": "F1"
+        },
+        {
+          "cm$byClass": 0.4636,
+          "_row": "Prevalence"
+        },
+        {
+          "cm$byClass": 0.4296,
+          "_row": "Detection Rate"
+        },
+        {
+          "cm$byClass": 0.4445,
+          "_row": "Detection Prevalence"
+        },
+        {
+          "cm$byClass": 0.9495,
+          "_row": "Balanced Accuracy"
+        }
+      ],
+      "core_metrics": {
+        "Accuracy": [0.9512],
+        "Precision": [0.9665],
+        "Recall": [0.9268],
+        "F1_Score": [0.9462],
+        "AUC": [0.9824]
+      },
+      "roc_data": [
+        {
+          "FPR": 0,
+          "TPR": 0
+        },
+        {
+          "FPR": 0.0124,
+          "TPR": 0.6718
+        },
+        {
+          "FPR": 0.0201,
+          "TPR": 0.7743
+        },
+        {
+          "FPR": 0.0265,
+          "TPR": 0.8187
+        },
+        {
+          "FPR": 0.0304,
+          "TPR": 0.8446
+        },
+        {
+          "FPR": 0.036,
+          "TPR": 0.8653
+        },
+        {
+          "FPR": 0.0372,
+          "TPR": 0.8835
+        },
+        {
+          "FPR": 0.0415,
+          "TPR": 0.8972
+        },
+        {
+          "FPR": 0.0437,
+          "TPR": 0.9075
+        },
+        {
+          "FPR": 0.0462,
+          "TPR": 0.9186
+        },
+        {
+          "FPR": 0.0505,
+          "TPR": 0.9253
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.939
+        },
+        {
+          "FPR": 0.0625,
+          "TPR": 0.9526
+        },
+        {
+          "FPR": 0.0646,
+          "TPR": 0.9637
+        },
+        {
+          "FPR": 0.0719,
+          "TPR": 0.9704
+        },
+        {
+          "FPR": 0.0749,
+          "TPR": 0.9734
+        },
+        {
+          "FPR": 0.0792,
+          "TPR": 0.9767
+        },
+        {
+          "FPR": 0.0903,
+          "TPR": 0.9804
+        },
+        {
+          "FPR": 0.0972,
+          "TPR": 0.9822
+        },
+        {
+          "FPR": 0.104,
+          "TPR": 0.9852
+        },
+        {
+          "FPR": 0.11,
+          "TPR": 0.9874
+        },
+        {
+          "FPR": 0.1156,
+          "TPR": 0.9889
+        },
+        {
+          "FPR": 0.122,
+          "TPR": 0.9904
+        },
+        {
+          "FPR": 0.1289,
+          "TPR": 0.9926
+        },
+        {
+          "FPR": 0.1357,
+          "TPR": 0.9948
+        },
+        {
+          "FPR": 0.149,
+          "TPR": 0.9959
+        },
+        {
+          "FPR": 0.1687,
+          "TPR": 0.9978
+        },
+        {
+          "FPR": 0.1986,
+          "TPR": 0.9978
+        },
+        {
+          "FPR": 0.2483,
+          "TPR": 0.9982
+        },
+        {
+          "FPR": 1,
+          "TPR": 1
+        }
+      ]
+    },
+    {
+      "name": ["Decision Tree"],
+      "cm_table": [
+        {
+          "Prediction": "1",
+          "Reference": "1",
+          "Freq": 2200
+        },
+        {
+          "Prediction": "2",
+          "Reference": "1",
+          "Freq": 136
+        },
+        {
+          "Prediction": "1",
+          "Reference": "2",
+          "Freq": 82
+        },
+        {
+          "Prediction": "2",
+          "Reference": "2",
+          "Freq": 2621
+        }
+      ],
+      "metrics": {
+        "Accuracy": [0.9567],
+        "Kappa": [0.9129],
+        "AccuracyLower": [0.9508],
+        "AccuracyUpper": [0.9622],
+        "AccuracyNull": [0.5364],
+        "AccuracyPValue": [0],
+        "McnemarPValue": [0.0003]
+      },
+      "class_metrics": [
+        {
+          "cm$byClass": 0.9418,
+          "_row": "Sensitivity"
+        },
+        {
+          "cm$byClass": 0.9697,
+          "_row": "Specificity"
+        },
+        {
+          "cm$byClass": 0.9641,
+          "_row": "Pos Pred Value"
+        },
+        {
+          "cm$byClass": 0.9507,
+          "_row": "Neg Pred Value"
+        },
+        {
+          "cm$byClass": 0.9641,
+          "_row": "Precision"
+        },
+        {
+          "cm$byClass": 0.9418,
+          "_row": "Recall"
+        },
+        {
+          "cm$byClass": 0.9528,
+          "_row": "F1"
+        },
+        {
+          "cm$byClass": 0.4636,
+          "_row": "Prevalence"
+        },
+        {
+          "cm$byClass": 0.4366,
+          "_row": "Detection Rate"
+        },
+        {
+          "cm$byClass": 0.4529,
+          "_row": "Detection Prevalence"
+        },
+        {
+          "cm$byClass": 0.9557,
+          "_row": "Balanced Accuracy"
+        }
+      ],
+      "core_metrics": {
+        "Accuracy": [0.9567],
+        "Precision": [0.9641],
+        "Recall": [0.9418],
+        "F1_Score": [0.9528],
+        "AUC": [0.9618]
+      },
+      "roc_data": [
+        {
+          "FPR": 0,
+          "TPR": 0
+        },
+        {
+          "FPR": 0,
+          "TPR": 0.0166
+        },
+        {
+          "FPR": 0.0441,
+          "TPR": 0.9323
+        },
+        {
+          "FPR": 0.0441,
+          "TPR": 0.9323
+        },
+        {
+          "FPR": 0.0441,
+          "TPR": 0.9323
+        },
+        {
+          "FPR": 0.0501,
+          "TPR": 0.9434
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 0.0582,
+          "TPR": 0.9697
+        },
+        {
+          "FPR": 1,
+          "TPR": 1
+        }
+      ]
+    },
+    {
+      "name": ["SVM"],
+      "cm_table": [
+        {
+          "Prediction": "1",
+          "Reference": "1",
+          "Freq": 2266
+        },
+        {
+          "Prediction": "2",
+          "Reference": "1",
+          "Freq": 70
+        },
+        {
+          "Prediction": "1",
+          "Reference": "2",
+          "Freq": 30
+        },
+        {
+          "Prediction": "2",
+          "Reference": "2",
+          "Freq": 2673
+        }
+      ],
+      "metrics": {
+        "Accuracy": [0.9802],
+        "Kappa": [0.9601],
+        "AccuracyLower": [0.9759],
+        "AccuracyUpper": [0.9838],
+        "AccuracyNull": [0.5364],
+        "AccuracyPValue": [0],
+        "McnemarPValue": [0.0001]
+      },
+      "class_metrics": [
+        {
+          "cm$byClass": 0.97,
+          "_row": "Sensitivity"
+        },
+        {
+          "cm$byClass": 0.9889,
+          "_row": "Specificity"
+        },
+        {
+          "cm$byClass": 0.9869,
+          "_row": "Pos Pred Value"
+        },
+        {
+          "cm$byClass": 0.9745,
+          "_row": "Neg Pred Value"
+        },
+        {
+          "cm$byClass": 0.9869,
+          "_row": "Precision"
+        },
+        {
+          "cm$byClass": 0.97,
+          "_row": "Recall"
+        },
+        {
+          "cm$byClass": 0.9784,
+          "_row": "F1"
+        },
+        {
+          "cm$byClass": 0.4636,
+          "_row": "Prevalence"
+        },
+        {
+          "cm$byClass": 0.4497,
+          "_row": "Detection Rate"
+        },
+        {
+          "cm$byClass": 0.4556,
+          "_row": "Detection Prevalence"
+        },
+        {
+          "cm$byClass": 0.9795,
+          "_row": "Balanced Accuracy"
+        }
+      ],
+      "core_metrics": {
+        "Accuracy": [0.9802],
+        "Precision": [0.9869],
+        "Recall": [0.97],
+        "F1_Score": [0.9784],
+        "AUC": [0.9947]
+      },
+      "roc_data": [
+        {
+          "FPR": 0,
+          "TPR": 0
+        },
+        {
+          "FPR": 0.0073,
+          "TPR": 0.9449
+        },
+        {
+          "FPR": 0.0201,
+          "TPR": 0.9682
+        },
+        {
+          "FPR": 0.024,
+          "TPR": 0.9734
+        },
+        {
+          "FPR": 0.0265,
+          "TPR": 0.9767
+        },
+        {
+          "FPR": 0.027,
+          "TPR": 0.9789
+        },
+        {
+          "FPR": 0.0274,
+          "TPR": 0.9804
+        },
+        {
+          "FPR": 0.0274,
+          "TPR": 0.9811
+        },
+        {
+          "FPR": 0.0283,
+          "TPR": 0.9811
+        },
+        {
+          "FPR": 0.0291,
+          "TPR": 0.9822
+        },
+        {
+          "FPR": 0.0291,
+          "TPR": 0.9837
+        },
+        {
+          "FPR": 0.0295,
+          "TPR": 0.9863
+        },
+        {
+          "FPR": 0.0295,
+          "TPR": 0.9871
+        },
+        {
+          "FPR": 0.0295,
+          "TPR": 0.9882
+        },
+        {
+          "FPR": 0.0295,
+          "TPR": 0.9889
+        },
+        {
+          "FPR": 0.0304,
+          "TPR": 0.9893
+        },
+        {
+          "FPR": 0.0304,
+          "TPR": 0.9896
+        },
+        {
+          "FPR": 0.0325,
+          "TPR": 0.99
+        },
+        {
+          "FPR": 0.0338,
+          "TPR": 0.9904
+        },
+        {
+          "FPR": 0.0347,
+          "TPR": 0.9911
+        },
+        {
+          "FPR": 0.036,
+          "TPR": 0.9915
+        },
+        {
+          "FPR": 0.0381,
+          "TPR": 0.9919
+        },
+        {
+          "FPR": 0.0394,
+          "TPR": 0.9919
+        },
+        {
+          "FPR": 0.0402,
+          "TPR": 0.9926
+        },
+        {
+          "FPR": 0.0432,
+          "TPR": 0.9937
+        },
+        {
+          "FPR": 0.0437,
+          "TPR": 0.9945
+        },
+        {
+          "FPR": 0.0462,
+          "TPR": 0.9952
+        },
+        {
+          "FPR": 0.0488,
+          "TPR": 0.9974
+        },
+        {
+          "FPR": 0.0578,
+          "TPR": 0.9989
+        },
+        {
+          "FPR": 1,
+          "TPR": 1
+        }
+      ]
+    },
+    {
+      "name": ["KNN"],
+      "cm_table": [
+        {
+          "Prediction": "1",
+          "Reference": "1",
+          "Freq": 2303
+        },
+        {
+          "Prediction": "2",
+          "Reference": "1",
+          "Freq": 33
+        },
+        {
+          "Prediction": "1",
+          "Reference": "2",
+          "Freq": 24
+        },
+        {
+          "Prediction": "2",
+          "Reference": "2",
+          "Freq": 2679
+        }
+      ],
+      "metrics": {
+        "Accuracy": [0.9887],
+        "Kappa": [0.9772],
+        "AccuracyLower": [0.9854],
+        "AccuracyUpper": [0.9914],
+        "AccuracyNull": [0.5364],
+        "AccuracyPValue": [0],
+        "McnemarPValue": [0.2893]
+      },
+      "class_metrics": [
+        {
+          "cm$byClass": 0.9859,
+          "_row": "Sensitivity"
+        },
+        {
+          "cm$byClass": 0.9911,
+          "_row": "Specificity"
+        },
+        {
+          "cm$byClass": 0.9897,
+          "_row": "Pos Pred Value"
+        },
+        {
+          "cm$byClass": 0.9878,
+          "_row": "Neg Pred Value"
+        },
+        {
+          "cm$byClass": 0.9897,
+          "_row": "Precision"
+        },
+        {
+          "cm$byClass": 0.9859,
+          "_row": "Recall"
+        },
+        {
+          "cm$byClass": 0.9878,
+          "_row": "F1"
+        },
+        {
+          "cm$byClass": 0.4636,
+          "_row": "Prevalence"
+        },
+        {
+          "cm$byClass": 0.457,
+          "_row": "Detection Rate"
+        },
+        {
+          "cm$byClass": 0.4618,
+          "_row": "Detection Prevalence"
+        },
+        {
+          "cm$byClass": 0.9885,
+          "_row": "Balanced Accuracy"
+        }
+      ],
+      "core_metrics": {
+        "Accuracy": [0.9887],
+        "Precision": [0.9897],
+        "Recall": [0.9859],
+        "F1_Score": [0.9878],
+        "AUC": [0.9942]
+      },
+      "roc_data": [
+        {
+          "FPR": 0.0043,
+          "TPR": 0.9652
+        },
+        {
+          "FPR": 0.0043,
+          "TPR": 0.9652
+        },
+        {
+          "FPR": 0.0043,
+          "TPR": 0.9652
+        },
+        {
+          "FPR": 0.0043,
+          "TPR": 0.9652
+        },
+        {
+          "FPR": 0.0043,
+          "TPR": 0.9652
+        },
+        {
+          "FPR": 0.0043,
+          "TPR": 0.9652
+        },
+        {
+          "FPR": 0.0081,
+          "TPR": 0.9819
+        },
+        {
+          "FPR": 0.0081,
+          "TPR": 0.9819
+        },
+        {
+          "FPR": 0.0081,
+          "TPR": 0.9819
+        },
+        {
+          "FPR": 0.0081,
+          "TPR": 0.9819
+        },
+        {
+          "FPR": 0.0081,
+          "TPR": 0.9819
+        },
+        {
+          "FPR": 0.0081,
+          "TPR": 0.9819
+        },
+        {
+          "FPR": 0.0141,
+          "TPR": 0.9911
+        },
+        {
+          "FPR": 0.0141,
+          "TPR": 0.9911
+        },
+        {
+          "FPR": 0.0141,
+          "TPR": 0.9911
+        },
+        {
+          "FPR": 0.0141,
+          "TPR": 0.9911
+        },
+        {
+          "FPR": 0.0141,
+          "TPR": 0.9911
+        },
+        {
+          "FPR": 0.0141,
+          "TPR": 0.9911
+        },
+        {
+          "FPR": 0.0265,
+          "TPR": 0.9948
+        },
+        {
+          "FPR": 0.0265,
+          "TPR": 0.9948
+        },
+        {
+          "FPR": 0.0265,
+          "TPR": 0.9948
+        },
+        {
+          "FPR": 0.0265,
+          "TPR": 0.9948
+        },
+        {
+          "FPR": 0.0265,
+          "TPR": 0.9948
+        },
+        {
+          "FPR": 0.0265,
+          "TPR": 0.9948
+        },
+        {
+          "FPR": 0.0355,
+          "TPR": 0.9974
+        },
+        {
+          "FPR": 0.036,
+          "TPR": 0.9974
+        },
+        {
+          "FPR": 0.036,
+          "TPR": 0.9974
+        },
+        {
+          "FPR": 0.036,
+          "TPR": 0.9974
+        },
+        {
+          "FPR": 0.036,
+          "TPR": 0.9974
+        },
+        {
+          "FPR": 1,
+          "TPR": 1
+        }
+      ]
+    }
+  ]
+}

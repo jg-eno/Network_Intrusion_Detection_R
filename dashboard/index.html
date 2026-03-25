@@ -19,11 +19,8 @@
             </div>
         </header>
 
-        <main class="dashboard-grid">
-            <section class="section-full metrics-grid" id="metrics-container">
-                <div class="metric-card custom-card loading-card">Loading metrics...</div>
-            </section>
-
+        <!-- Global Dataset Insights -->
+        <div class="dashboard-grid">
             <section class="section-half custom-card">
                 <div class="header-top">
                     <h2>Class Distribution</h2>
@@ -67,6 +64,21 @@
                     <canvas id="edaChart"></canvas>
                 </div>
             </section>
+        </div>
+
+        <!-- Model Tabs Selection -->
+        <div class="model-tabs-container">
+            <h3 class="tabs-title">Model Performance</h3>
+            <div class="model-tabs" id="model-tabs">
+                <!-- Rendered dynamically by JS -->
+                <p class="loading">Loading models...</p>
+            </div>
+        </div>
+
+        <main class="dashboard-grid model-metrics-section">
+            <section class="section-full metrics-grid" id="metrics-container">
+                <div class="metric-card custom-card loading-card">Loading metrics...</div>
+            </section>
 
             <section class="section-half custom-card">
                 <div class="header-top">
@@ -75,12 +87,12 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="code-tooltip-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
                         <div class="code-tooltip-content">
                             <strong>Caret Evaluation Snippet (R)</strong>
-                            <pre><code><span class="token comment"># randomForest model prediction</span>
-<span class="token variable">y_pred</span> <span class="token operator">&lt;-</span> <span class="token function">predict</span>(<span class="token variable">rf_model</span>, <span class="token variable">x_val</span>)
+                            <pre><code><span class="token comment"># model prediction</span>
+<span class="token variable">y_pred</span> <span class="token operator">&lt;-</span> <span class="token function">predict</span>(<span class="token variable">model</span>, <span class="token variable">x_val</span>)
 
 <span class="token variable">cm</span> <span class="token operator">&lt;-</span> <span class="token function">confusionMatrix</span>(<span class="token function">as.factor</span>(<span class="token variable">y_pred</span>), <span class="token function">as.factor</span>(<span class="token variable">y_val</span>))
 <span class="token variable">cm_table</span> <span class="token operator">=</span> <span class="token function">as.data.frame</span>(<span class="token variable">cm</span><span class="token operator">$</span><span class="token variable">table</span>)</code></pre>
-                            <p>Using the caret package, we pass the random forest predictions against the validation set to instantly generate a comprehensive confusion matrix.</p>
+                            <p>Using the caret package, we pass the model predictions against the validation set to instantly generate a comprehensive confusion matrix.</p>
                         </div>
                     </div>
                 </div>
@@ -107,20 +119,12 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="code-tooltip-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
                         <div class="code-tooltip-content">
                             <strong>Receiver Operating Characteristic</strong>
-                            <p>This graph maps the performance of our Random Forest model across all classification thresholds. <strong>TPR (Sensitivity)</strong> reflects the percentage of correctly identified intrusions, while <strong>FPR (1 - Specificity)</strong> shows the false alarms.<br/><br/>The perfect model hugs the top-left corner, corresponding to the <strong>AUC (Area Under Curve)</strong> metric dynamically printed in your top cards.</p>
+                            <p>This graph maps the performance of our model across all classification thresholds. <strong>TPR (Sensitivity)</strong> reflects the percentage of correctly identified intrusions, while <strong>FPR (1 - Specificity)</strong> shows the false alarms.<br/><br/>The perfect model hugs the top-left corner, corresponding to the <strong>AUC (Area Under Curve)</strong> metric dynamically printed in your top cards.</p>
                         </div>
                     </div>
                 </div>
                 <div class="chart-container">
                     <canvas id="rocChart"></canvas>
-                </div>
-            </section>
-
-            <section class="section-full qa-section-margin">
-                <h2>Project Use Case Insights</h2>
-                <p class="subtitle">Actionable intelligence aggregated from our analysis</p>
-                <div id="qa-container" class="qa-grid">
-                    <p class="loading">Loading insights...</p>
                 </div>
             </section>
         </main>
